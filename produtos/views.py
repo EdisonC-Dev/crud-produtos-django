@@ -53,3 +53,19 @@ def excluir_produto(request, id):
         "produtos/confirmar_exclusao.html",
         {"produto": produto},
     )
+def listar_produtos(request):
+    busca = request.GET.get("busca", "").strip()
+
+    produtos = Produto.objects.all()
+
+    if busca:
+        produtos = produtos.filter(nome__icontains=busca)
+
+    return render(
+        request,
+        "produtos/lista.html",
+        {
+            "produtos": produtos,
+            "busca": busca,
+        },
+    )

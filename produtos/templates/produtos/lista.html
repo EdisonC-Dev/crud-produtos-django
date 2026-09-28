@@ -17,6 +17,23 @@
     <div class="container">
 
         <h1>Produtos cadastrados</h1>
+        <form method="GET" action="{% url 'listar_produtos' %}">
+    <label for="busca">Pesquisar produto:</label>
+
+    <input
+        type="search"
+        id="busca"
+        name="busca"
+        placeholder="Digite o nome do produto"
+        value="{{ busca }}"
+    >
+
+    <button type="submit" class="botao">Pesquisar</button>
+
+    <a href="{% url 'listar_produtos' %}" class="botao">
+        Limpar
+    </a>
+</form>
 
         <a href="{% url 'criar_produto' %}" class="botao novo-produto">
             + Cadastrar novo produto
@@ -34,6 +51,8 @@
                     Preço: R$ {{ produto.preco }}
                     <br>
                     Estoque: {{ produto.estoque }}
+                    <br>
+                    Categoria: {{ produto.get_categoria_display }}
                 </div>
 
                 <a href="{% url 'editar_produto' produto.id %}"
@@ -51,7 +70,11 @@
         {% empty %}
 
             <div class="produto">
-                Nenhum produto cadastrado ainda.
+                {% if busca %}
+            Nenhum produto encontrado para "{{ busca }}".
+        {% else %}
+            Nenhum produto cadastrado ainda.
+        {% endif %}
             </div>
 
         {% endfor %}
