@@ -2,92 +2,149 @@
 
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Meus Produtos</title>
+    <title>Produtos | Controle de estoque</title>
 
     <link rel="stylesheet" href="{% static 'produtos/style.css' %}">
 </head>
 
 <body>
+    <main class="container">
+        <header class="cabecalho">
+            <div>
+                <span class="identificacao">CONTROLE DE ESTOQUE</span>
+                <h1>Meus produtos</h1>
+                <p class="subtitulo">
+                    Organize seu catálogo e acompanhe o estoque.
+                </p>
+            </div>
 
-    <div class="container">
+            <a href="{% url 'criar_produto' %}" class="botao novo-produto">
+                + Novo produto
+            </a>
+        </header>
 
-        <h1>Produtos cadastrados</h1>
         {% if messages %}
-    {% for message in messages %}
-        <div class="mensagem-sucesso" role="status">
-            {{ message }}
-        </div>
-    {% endfor %}
-{% endif %}
-        <form method="GET" action="{% url 'listar_produtos' %}">
-    <label for="busca">Pesquisar produto:</label>
-
-    <input
-        type="search"
-        id="busca"
-        name="busca"
-        placeholder="Digite o nome do produto"
-        value="{{ busca }}"
-    >
-
-    <button type="submit" class="botao">Pesquisar</button>
-
-    <a href="{% url 'listar_produtos' %}" class="botao">
-        Limpar
-    </a>
-</form>
-
-        <a href="{% url 'criar_produto' %}" class="botao novo-produto">
-            + Cadastrar novo produto
-        </a>
-
-        {% for produto in produtos %}
-
-            <div class="produto">
-
-                <div class="produto-nome">
-                    {{ produto.nome }}
+            {% for message in messages %}
+                <div class="mensagem-sucesso" role="status">
+                    {{ message }}
                 </div>
-
-                <div class="produto-info">
-                    Preço: R$ {{ produto.preco }}
-                    <br>
-                    Estoque: {{ produto.estoque }}
-                    <br>
-                    Categoria: {{ produto.get_categoria_display }}
-                </div>
-
-                <a href="{% url 'editar_produto' produto.id %}"
-                   class="botao editar">
-                    Editar
-                </a>
-
-                <a href="{% url 'excluir_produto' produto.id %}"
-                   class="botao excluir">
-                    Excluir
-                </a>
-
-            </div>
-
-        {% empty %}
-
-            <div class="produto">
-                {% if busca %}
-            Nenhum produto encontrado para "{{ busca }}".
-        {% else %}
-            Nenhum produto cadastrado ainda.
+            {% endfor %}
         {% endif %}
-            </div>
 
-        {% endfor %}
+        <section class="painel-busca" aria-label="Pesquisa de produtos">
+            <form method="GET" action="{% url 'listar_produtos' %}">
+                <label for="busca">Encontre um produto</label>
 
-    </div>
+                <div class="linha-busca">
+                    <input
+                        type="search"
+                        id="busca"
+                        name="busca"
+                        placeholder="Pesquise pelo nome..."
+                        value="{{ busca }}"
+                    >
 
+                    <button type="submit" class="botao pesquisar">
+                        Pesquisar
+                    </button>
+
+                    <a href="{% url 'listar_produtos' %}" class="botao limpar">
+                        Limpar
+                    </a>
+                </div>
+            </form>
+        </section>
+
+        <div class="titulo-listagem">
+            <h2>
+                {% if busca %}
+                    Resultados da pesquisa
+                {% else %}
+                    Catálogo de produtos
+                {% endif %}
+            </h2>
+
+            <span class="contador">
+                {{ produtos|length }}
+                produto{{ produtos|length|pluralize:"s" }}
+            </span>
+        </div>
+
+        <section class="grade-produtos" aria-label="Lista de produtos">
+            {% for produto in produtos %}
+                <article class="produto">
+                    <div class="produto-topo">
+                        <span class="categoria">
+                            {{ produto.get_categoria_display }}
+                        </span>
+
+                        {% if produto.estoque > 0 %}
+                            <span class="situacao disponivel">Em estoque</span>
+                        {% else %}
+                            <span class="situacao esgotado">Esgotado</span>
+                        {% endif %}
+                    </div>
+
+                    <h3 class="produto-nome">{{ produto.nome }}</h3>
+
+                    <p class="produto-preco">
+                        <span>R$</span> {{ produto.preco|floatformat:2 }}
+                    </p>
+
+                    <div class="estoque">
+                        <span>Quantidade em estoque</span>
+                        <strong>{{ produto.estoque }}</strong>
+                    </div>
+
+                    <div class="produto-acoes">
+                        <a
+                            href="{% url 'editar_produto' produto.id %}"
+                            class="botao editar"
+                            aria-label="Editar {{ produto.nome }}"
+                        >
+                            Editar
+                        </a>
+
+                        <a
+                            href="{% url 'excluir_produto' produto.id %}"
+                            class="botao excluir"
+                            aria-label="Excluir {{ produto.nome }}"
+                        >
+                            Excluir
+                        </a>
+                    </div>
+                </article>
+            {% empty %}
+                <div class="estado-vazio">
+                    {% if busca %}
+                        <h3>Nenhum resultado encontrado</h3>
+                        <p>
+                            Não encontramos produtos para "{{ busca }}".
+                            Tente outro nome.
+                        </p>
+
+                        <a href="{% url 'listar_produtos' %}" class="botao editar">
+                            Ver todos os produtos
+                        </a>
+                    {% else %}
+                        <h3>Seu catálogo começa aqui</h3>
+                        <p>Cadastre seu primeiro produto para acompanhar o estoque.</p>
+
+                        <a href="{% url 'criar_produto' %}" class="botao novo-produto">
+                            + Cadastrar produto
+                        </a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </section>
+
+        <footer class="rodape">
+            Controle de produtos · Desenvolvido por Edison Cavalcante
+        </footer>
+    </main>
 </body>
-
 </html>
