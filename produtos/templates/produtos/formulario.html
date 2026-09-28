@@ -1,19 +1,45 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
-    <title>Cadastrar produto</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cadastrar Produto</title>
+
+    <link rel="stylesheet" href="{% static 'produtos/style.css' %}">
 </head>
+
 <body>
-    <h1>Cadastrar produto</h1>
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
+    <div class="container">
 
-        <button type="submit">Salvar produto</button>
-    </form>
+        <div class="formulario">
 
-    <a href="{% url 'listar_produtos' %}">Voltar à lista</a>
+            <h1>Cadastrar produto</h1>
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <button type="submit" class="botao salvar">
+                    Salvar produto
+                </button>
+
+            </form>
+
+            <a href="{% url 'listar_produtos' %}" class="voltar">
+                ← Voltar à lista
+            </a>
+
+        </div>
+
+    </div>
+
 </body>
+
 </html>

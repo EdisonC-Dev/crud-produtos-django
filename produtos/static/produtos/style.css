@@ -1,0 +1,97 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    margin: 0;
+    padding: 40px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+h1 {
+    color: #222;
+    margin-bottom: 25px;
+}
+
+.produto {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+}
+
+.produto-nome {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.produto-info {
+    margin-top: 8px;
+    margin-bottom: 15px;
+}
+
+.botao {
+    display: inline-block;
+    padding: 8px 14px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.editar {
+    background-color: #e9ecef;
+    color: #222;
+}
+
+.excluir {
+    background-color: #dc3545;
+    color: white;
+}
+
+.novo-produto {
+    background-color: #198754;
+    color: white;
+    margin-bottom: 20px;
+}
+.formulario {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 500px;
+}
+
+.formulario label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.formulario input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.salvar {
+    background-color: #198754;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.salvar:hover {
+    background-color: #157347;
+}
+
+.voltar {
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: none;
+    color: #333;
+}
