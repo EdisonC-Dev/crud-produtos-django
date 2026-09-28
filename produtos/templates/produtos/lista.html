@@ -17,6 +17,13 @@
     <div class="container">
 
         <h1>Produtos cadastrados</h1>
+        {% if messages %}
+    {% for message in messages %}
+        <div class="mensagem-sucesso" role="status">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
         <form method="GET" action="{% url 'listar_produtos' %}">
     <label for="busca">Pesquisar produto:</label>
 
