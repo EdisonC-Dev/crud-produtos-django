@@ -1,10 +1,30 @@
 from django.db import models
 
-# definição dos dados de um produto: nome, preço e quantidade em estoque.
+
 class Produto(models.Model):
+
+    CATEGORIAS = [
+        ("perifericos", "Periféricos"),
+        ("hardware", "Hardware"),
+        ("monitores", "Monitores"),
+        ("acessorios", "Acessórios"),
+        ("outros", "Outros"),
+    ]
+
     nome = models.CharField(max_length=100)
-    preco = models.DecimalField(max_digits=10, decimal_places=2)
-    estoque = models.PositiveIntegerField(default=0)
+
+    preco = models.DecimalField(
+        max_digits=10,
+        decimal_places=2
+    )
+
+    estoque = models.IntegerField()
+
+    categoria = models.CharField(
+        max_length=100,
+        choices=CATEGORIAS,
+        default="outros"
+    )
 
     def __str__(self):
         return self.nome
