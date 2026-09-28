@@ -142,8 +142,8 @@ A publicação em produção exige a implementação de autenticação e permiss
 
 ## Melhorias planejadas
 
-- [ ] Aprimorar o layout e a adaptação para dispositivos móveis.
-- [ ] Adicionar pesquisa e paginação à listagem.
+- [  :white_check_mark:  ] Aprimorar o layout e a adaptação para dispositivos móveis.
+- [ :white_check_mark:  ] Adicionar pesquisa e paginação à listagem.
 - [ ] Implementar autenticação e controle de acesso.
 - [ ] Adicionar testes automatizados.
 - [ ] Exibir mensagens de sucesso após as operações.
